@@ -42,6 +42,8 @@ Nothing is set in stone, this is currently defining my "pipe dream."
 ### Considerations (ideas to consider)
 
 - Frontend/Client
+    - Astro: Works with a framework of choice and is meant to build sites.
+        Known for its island feature, allowing selective hydration.
     - Svelte: Minimal, readable syntax that compiles to blocks of javascript.
         Works for the scale of this project and allows for lower level edits,
         which may be better for the 
