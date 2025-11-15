@@ -117,15 +117,9 @@ func TestSchemaUnmarshalFromJSON(t *testing.T) {
 }
 
 func TestInstanceJSONSerialization(t *testing.T) {
-	schema := Schema{
-		ID:      "schema-123",
-		Name:    "Test Schema",
-		Version: 1,
-	}
-
 	instance := Instance{
 		ID:     "instance-456",
-		Schema: schema,
+		SchemaID: "schema-12",
 //		Visualization: Visualization{
 //			Name: "Main",
 //			Type: VisDefault,
@@ -154,7 +148,7 @@ func TestInstanceJSONSerialization(t *testing.T) {
 	// Check for correct JSON keys
 	requiredKeys := []string{
 		`"_id"`,
-		`"schema"`,
+		`"schema_id"`,
 		`"visualization"`,
 		`"user_id"`,
 		`"name"`,
@@ -608,5 +602,5 @@ func TestInstanceUnmarshalFromJSON(t *testing.T) {
 // Commented out - helper methods not yet implemented
 // func TestHelperMethods(t *testing.T) { ... }
 
-// Commented out - instance methods not yet implemented
+// Commented out schema- instance methods not yet implemented
 // func TestInstanceMethods(t *testing.T) { ... }

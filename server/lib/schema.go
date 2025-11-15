@@ -59,19 +59,19 @@ const (
 // of variables, features for defining application logic, and modules for
 // grouping.
 type Schema struct {
-	ID             string              `json:"_id"`
-	Version        int                 `json:"version"`
-	UserVersion    int                 `json:"user_version"`
-	Name           string              `json:"name"`
-	Description    string              `json:"description"`
-//	Variables      map[string]Variable `json:"variables"`
-//	Properties     map[string]Property `json:"display_values"`
-//	Features       map[string]Feature  `json:"features"`
-//	Modules        map[string]Module   `json:"modules"`
-//	Initialization Initialization      `json:"initialization"`
-//	Visualization  Visualization       `json:"visualization"`
-	CreatedAt      time.Time           `json:"created_at"`
-	UpdatedAt      time.Time           `json:"updated_at"`
+	ID          string `json:"_id"`
+	Version     int    `json:"version"`
+	UserVersion int    `json:"user_version"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	//	Variables      map[string]Variable `json:"variables"`
+	//	Properties     map[string]Property `json:"display_values"`
+	//	Features       map[string]Feature  `json:"features"`
+	//	Modules        map[string]Module   `json:"modules"`
+	//	Initialization Initialization      `json:"initialization"`
+	//	Visualization  Visualization       `json:"visualization"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type Variable struct {
@@ -80,7 +80,7 @@ type Variable struct {
 	Min     *float64     `json:"min,omitempty"`
 	Max     *float64     `json:"max,omitempty"`
 	Options []string     `json:"options,omitempty"` // for enum
-	Items   *Variable    `json:"items,omitempty"`  // for array type
+	Items   *Variable    `json:"items,omitempty"`   // for array type
 }
 
 type Property struct {
@@ -129,16 +129,17 @@ type Field struct {
 // An instance of data based off a schema.
 // All values from the schema are processed at runtime.
 type Instance struct {
-	ID             string         `json:"_id"`
-	Schema         Schema         `json:"schema"`
-//	Visualization  Visualization  `json:"visualization"`
-	UserID         string         `json:"user_id"`
-	Name           string         `json:"name"`
-//	VariableValues map[string]any `json:"variable_values"`
-//	ActiveFeatures []string       `json:"active_features"`
-//	ActiveModules  []string       `json:"active_modules"`
-	CreatedAt      time.Time      `json:"created_at"`
-	UpdatedAt      time.Time      `json:"updated_at"`
+	ID       string `json:"_id"`
+	SchemaID string `json:"schema_id"`
+	//	Visualization  Visualization  `json:"visualization"`
+	UserID      string `json:"user_id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	//	VariableValues map[string]any `json:"variable_values"`
+	//	ActiveFeatures []string       `json:"active_features"`
+	//	ActiveModules  []string       `json:"active_modules"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 // Visualization
