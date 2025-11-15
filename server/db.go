@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"sync"
 )
 
@@ -26,12 +27,28 @@ func (db *JsonDB) Set(collection, user, entry string, data any) error {
 		return fmt.Errorf("failed to marshal data: %w", err)
 	}
 
+	filePath := filepath.Join(dir, entry+".json")
+
+	jsonData, err := json.MarshalIndent(data, "", " ")
+	if err != nil {
+		return fmt.Errorf("marshal failed: %w", err)
+	}
+
+	if err := os.WriteFile(filePath, jsonData, 0644); err != nil {
+		return fmt.Errorf("write failed: %w", err)
+	}
+
 	return nil
 }
 
 func (db *JsonDB) Get(collection, user, entry string, dest any) error {
 	db.mu.RLock()
 	defer db.mu.RUnlock()
+
+	// checks if dest is a pointer
+	if reflect.ValueOf(dest).Kind() != reflect.Pointer {
+		return fmt.Errorf("dest must be a pointer")
+	}
 
 	filepath := filepath.Join(db.basePath, collection, user, entry+".json")
 
@@ -67,7 +84,7 @@ func (db *JsonDB) Delete(collection, user, entry string) error {
 }
 
 func (db *JsonDB) List(collection, user string) ([]string, error) {
-	db.mu.RUnlock()
+	db.mu.RLock()
 	defer db.mu.RUnlock()
 
 	dir := filepath.Join(db.basePath, collection, user)
