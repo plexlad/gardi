@@ -42,7 +42,7 @@ function createSchemaStore(): SchemaStore {
       try {
         await api.saveSchema(user, schema);
         update(schemas => 
-          schemas.map(s => s.id === schema.id ? schema : s)
+          schemas.map(s => s._id === schema._id ? schema : s)
         );
       } catch (error) {
         console.error('Failed to save schema:', error);

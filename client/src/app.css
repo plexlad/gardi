@@ -1,1 +1,6 @@
-
+:root {
+  --urgent: #F44336;
+  --button: #2196F3;
+  --background: #F5F5F5;
+  --foreground: #F0F0F0;
+}

@@ -15,12 +15,10 @@
   {#if $currentUser}
     <div class="content">
       <section>
-        <h2>Schemas</h2>
         <SchemaList user={$currentUser} />
       </section>
       
       <section>
-        <h2>Instances</h2>
         <InstanceList user={$currentUser} />
       </section>
     </div>

@@ -16,6 +16,7 @@
   onMount(async () => {
     try {
       await schemas.load(user);
+      console.log('Loaded schemas:', $schemas);
       loading = false;
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to load schemas';
@@ -71,11 +72,11 @@
     <div class="grid">
       {#each $schemas as schema}
         <div class="card">
-          <h4>{schema.Name}</h4>
-          <p>{schema.Description}</p>
+          <h4>{schema.name}</h4>
+          <p>{schema.description}</p>
           <div class="meta">
-            <small>Version: {schema.Version}</small>
-            <small>Created: {new Date(schema.CreatedAt).toLocaleDateString()}</small>
+            <small>Version: {schema.version}</small>
+            <small>Created: {new Date(schema.created_at).toLocaleDateString()}</small>
           </div>
         </div>
       {/each}
