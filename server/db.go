@@ -97,7 +97,7 @@ func (db *JsonDB) List(collection, user string) ([]string, error) {
 		return nil, fmt.Errorf("failed to read directory: %w", err)
 	}
 
-	var names []string
+	names := []string{}
 	for _, entry := range entries {
 		if !entry.IsDir() && filepath.Ext(entry.Name()) == ".json" {
 			// remove .json extension

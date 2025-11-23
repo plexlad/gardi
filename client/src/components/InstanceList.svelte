@@ -1,12 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { instances } from '../stores/instanceStore';
   import { schemas } from '../stores/schemaStore';
   import type { Instance, NewInstanceRequest } from '../lib/types';
-  import * as api from '../lib/api';
   
   export let user: string;
   
-  let instances: Instance[] = [];
   let loading = true;
   let error = '';
   let showForm = false;
@@ -19,9 +18,7 @@
   onMount(async () => {
     try {
       // Load schemas first (for the dropdown)
-      await schemas.load(user);
-      // Load instances
-      instances = await api.getInstances(user);
+      await instances.load(user);
       loading = false;
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to load instances';
@@ -31,17 +28,24 @@
   
   async function handleCreate() {
     try {
-      const created = await api.createInstance(user, newInstance);
-      instances = [...instances, created];
+      await instances.create(user, newInstance);
       newInstance = { name: '', description: '', schema_id: '' };
       showForm = false;
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to create instance';
     }
   }
+
+  async function handleDelete(instance: Instance) {
+    try {
+      await instances.delete(user, instance);
+    } catch (e) {
+      error = e instanceof Error ? e.message : 'Failed to delete instance';
+    }
+  }
   
   function getSchemaName(schemaId: string): string {
-    const schema = $schemas.find(s => s.id === schemaId);
+    const schema = $schemas.find(s => s._id === schemaId);
     return schema ? schema.name : 'Unknown Schema';
   }
 </script>
@@ -83,11 +87,11 @@
   
   {#if loading}
     <div class="loading">Loading instances...</div>
-  {:else if instances.length === 0}
+  {:else if $instances.length === 0}
     <div class="empty">No instances yet. Create one to get started!</div>
   {:else}
     <div class="grid">
-      {#each instances as instance}
+      {#each $instances as instance}
         <div class="card">
           <h4>{instance.name}</h4>
           <p>{instance.description}</p>
@@ -95,6 +99,7 @@
             <small>Schema: {getSchemaName(instance.schema_id)}</small>
             <small>Created: {new Date(instance.created_at).toLocaleDateString()}</small>
           </div>
+          <button on:click={() => handleDelete(instance)}>Delete</button>
         </div>
       {/each}
     </div>

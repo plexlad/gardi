@@ -1,11 +1,9 @@
-# Air config for a Go project with all server code in ./server
-
 root = "."
 tmp_dir = "tmp"
 
 [build]
 bin = "tmp/server"
-cmd = "go build -o tmp/server ./server"
+cmd = "go build -o ./tmp/server ./server"
 include_ext = ["go", "html", "tmpl", "tpl", "toml", "json"]
 include_dir = ["server"]
 exclude_dir = ["tmp", "vendor", "node_modules", "dist", ".git"]

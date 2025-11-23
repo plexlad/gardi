@@ -20,12 +20,12 @@ async function handleResponse<T>(response: Response): Promise<T> {
 export async function getSchemaIDs(user: string): Promise<string[]> {
   const response = await fetch(`${API_BASE}/${user}/schemas`);
   const data = await handleResponse<string[]>(response);
-  return data;
+  return data ?? [];
 }
 
 export async function getSchemas(user: string): Promise<Schema[]> {
   const ids = await getSchemaIDs(user);
-  console.log("ids:", ids, "type:", typeof ids, "isArray:", Array.isArray(ids));
+  console.log("Schemas - ids:", ids, "type:", typeof ids, "isArray:", Array.isArray(ids));
   const schemas = await Promise.all(
     ids.map(async (id: string) => {
       return handleResponse<Schema>(
@@ -62,24 +62,43 @@ export async function saveSchema(
 
 export async function deleteSchema(
   user: string,
-  instance: Instance,
+  schema: Schema,
 ): Promise<void> {
-  const response = await fetch(
-    `${API_BASE}/${user}/instances/${instance._id}/delete`,
-    {
-      method: "DELETE",
-    },
-  );
+  const schemaDeleteLink = `${API_BASE}/${user}/schemas/${schema._id}`;
+  console.log("Deleting schema:", {
+    user,
+    schemaId: schema._id,
+    url: schemaDeleteLink,
+  });
+  const response = await fetch(schemaDeleteLink, {
+    method: "DELETE",
+  });
 
   if (!response.ok) {
-    throw new Error("Failed to delete schema");
+    const text = await response.text();
+    console.error("Delete schema response text:", response.status, text);
+    throw new Error(`Failed to delete schema: ${response.status}`);
   }
 }
 
 // Instance API
-export async function getInstances(user: string): Promise<Instance[]> {
+export async function getInstanceIDs(user: string): Promise<string[]> {
   const response = await fetch(`${API_BASE}/${user}/instances`);
-  return handleResponse<Instance[]>(response);
+  const data = await handleResponse<string[]>(response);
+  return data ?? [];
+}
+
+export async function getInstances(user: string): Promise<Instance[]> {
+  const ids = await getInstanceIDs(user);
+  console.log("Instances - ids:", ids, "type:", typeof ids, "isArray:", Array.isArray(ids));
+  const instances = await Promise.all(
+    ids.map(async (id: string) => {
+      return handleResponse<Instance>(
+        await fetch(`${API_BASE}/${user}/instances/${id}`),
+      );
+    }),
+  );
+  return instances;
 }
 
 export async function createInstance(
@@ -111,7 +130,7 @@ export async function deleteInstance(
   instance: Instance,
 ): Promise<void> {
   const response = await fetch(
-    `${API_BASE}/${user}/instances/${instance._id}/delete`,
+    `${API_BASE}/${user}/instances/${instance._id}`,
     {
       method: "DELETE",
     },

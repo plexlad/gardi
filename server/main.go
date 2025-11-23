@@ -37,7 +37,7 @@ func main() {
 	router.Use(middleware.Recover())
 	router.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
-		AllowMethods: []string{http.MethodGet, http.MethodPost},
+		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodDelete},
 	}))
 
 	u := router.Group("/:user")
@@ -71,7 +71,7 @@ func main() {
 		}
 
 		return c.NoContent(http.StatusNoContent)
-	}
+	})
 
 	schemas.POST("/new", func(c echo.Context) error {
 		user := c.Param("user")
@@ -167,7 +167,7 @@ func main() {
 		}
 
 		return c.NoContent(http.StatusNoContent)
-	}
+	})
 
 	instances.POST("/new", func(c echo.Context) error {
 		user := c.Param("user")

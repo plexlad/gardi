@@ -7,6 +7,7 @@ interface InstanceStore extends Writable<Instance[]> {
   load: (user: string) => Promise<void>;
   create: (user: string, data: NewInstanceRequest) => Promise<Instance>;
   save: (user: string, instance: Instance) => Promise<void>;
+  delete: (user: string, instance: Instance) => Promise<void>;
 }
 
 function createInstanceStore(): InstanceStore {
@@ -16,7 +17,7 @@ function createInstanceStore(): InstanceStore {
     subscribe,
     set,
     update,
-    
+
     load: async (user: string) => {
       try {
         const instances = await api.getInstances(user);
@@ -26,7 +27,7 @@ function createInstanceStore(): InstanceStore {
         throw error;
       }
     },
-    
+
     create: async (user: string, data: NewInstanceRequest) => {
       try {
         const newInstance = await api.createInstance(user, data);
@@ -37,18 +38,28 @@ function createInstanceStore(): InstanceStore {
         throw error;
       }
     },
-    
+
     save: async (user: string, instance: Instance) => {
       try {
         await api.saveInstance(user, instance);
-        update(instances => 
+        update(instances =>
           instances.map(i => i._id === instance._id ? instance : i)
         );
       } catch (error) {
         console.error('Failed to save instance:', error);
         throw error;
       }
-    }
+    },
+
+    delete: async (user: string, instance: Instance) => {
+      try {
+        await api.deleteInstance(user, instance);
+        update(instances => instances.filter(i => i._id !== instance._id));
+      } catch (e) {
+        console.error('Failed to delete instance:', e);
+        throw e;
+      }
+    },
   };
 }
 

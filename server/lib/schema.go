@@ -64,7 +64,7 @@ type Schema struct {
 	UserVersion int    `json:"user_version"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
-	//	Variables      map[string]Variable `json:"variables"`
+	Variables      map[string]Variable `json:"variables"`
 	//	Properties     map[string]Property `json:"display_values"`
 	//	Features       map[string]Feature  `json:"features"`
 	//	Modules        map[string]Module   `json:"modules"`
