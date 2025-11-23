@@ -59,6 +59,20 @@ func main() {
 		return c.JSON(http.StatusOK, schema)
 	})
 
+	schemas.DELETE("/:id", func(c echo.Context) error {
+		user := c.Param("user")
+		id := c.Param("id")
+
+		err := db.Delete(CollectionSchemas, user, id)
+		if err != nil {
+			return c.JSON(http.StatusNotFound, map[string]string{
+				"error": err.Error(),
+			})
+		}
+
+		return c.NoContent(http.StatusNoContent)
+	}
+
 	schemas.POST("/new", func(c echo.Context) error {
 		user := c.Param("user")
 
@@ -140,6 +154,20 @@ func main() {
 
 		return c.JSON(http.StatusOK, instance)
 	})
+
+	instances.DELETE("/:id", func(c echo.Context) error {
+		user := c.Param("user")
+		id := c.Param("id")
+
+		err := db.Delete(CollectionInstances, user, id)
+		if err != nil {
+			return c.JSON(http.StatusNotFound, map[string]string{
+				"error": err.Error(),
+			})
+		}
+
+		return c.NoContent(http.StatusNoContent)
+	}
 
 	instances.POST("/new", func(c echo.Context) error {
 		user := c.Param("user")

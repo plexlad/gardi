@@ -25,7 +25,7 @@ export async function getSchemaIDs(user: string): Promise<string[]> {
 
 export async function getSchemas(user: string): Promise<Schema[]> {
   const ids = await getSchemaIDs(user);
-  console.log('ids:', ids, 'type:', typeof ids, 'isArray:', Array.isArray(ids));
+  console.log("ids:", ids, "type:", typeof ids, "isArray:", Array.isArray(ids));
   const schemas = await Promise.all(
     ids.map(async (id: string) => {
       return handleResponse<Schema>(
@@ -60,6 +60,22 @@ export async function saveSchema(
   return response.text();
 }
 
+export async function deleteSchema(
+  user: string,
+  instance: Instance,
+): Promise<void> {
+  const response = await fetch(
+    `${API_BASE}/${user}/instances/${instance._id}/delete`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete schema");
+  }
+}
+
 // Instance API
 export async function getInstances(user: string): Promise<Instance[]> {
   const response = await fetch(`${API_BASE}/${user}/instances`);
@@ -88,4 +104,20 @@ export async function saveInstance(
     body: JSON.stringify(instance),
   });
   return response.text();
+}
+
+export async function deleteInstance(
+  user: string,
+  instance: Instance,
+): Promise<void> {
+  const response = await fetch(
+    `${API_BASE}/${user}/instances/${instance._id}/delete`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete instance");
+  }
 }
