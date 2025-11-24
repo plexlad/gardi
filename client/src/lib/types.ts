@@ -4,6 +4,7 @@ export interface Schema {
   user_version: number;
   name: string;
   description: string;
+  variables: { [key: string]: Variable };
   created_at: string;
   updated_at: string;
 }
@@ -18,17 +19,17 @@ export interface Instance {
 }
 
 // The types of selectable variables
-export enum VariableType {
-  NUMBER = "number",
-  STRING = "string",
-  BOOLEAN = "boolean",
-  ENUM = "enum",
-  ARRAY = "array",
+export enum VariableTypes {
+  Number = "number",
+  String = "string",
+  Boolean = "boolean",
+  Enum = "enum",
+  Array = "array",
 }
 
 // Determines what your variable is
 export interface Variable {
-  type: VariableType;
+  type: VariableTypes;
   default: any;
   min: number | null;
   max: number | null;
