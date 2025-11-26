@@ -21,6 +21,7 @@ function createSchemaStore(): SchemaStore {
     load: async (user: string) => {
       try {
         const schemas = await api.getSchemas(user);
+        console.log("API returned schemas:", schemas);
         set(schemas);
       } catch (error) {
         console.error("Failed to load schemas:", error);

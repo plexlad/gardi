@@ -80,7 +80,7 @@
     <div class="grid">
       {#each $schemas as schema}
         <div class="card">
-          <a href={"/#/schemas/" + schema._id}><h4>{schema.name}</h4></a>
+          <a href={import.meta.env.BASE_URL + "#/schemas/" + schema._id}><h4>{schema.name}</h4></a>
           <p>{schema.description}</p>
           <div class="meta">
             <small>Version: {schema.version}</small>

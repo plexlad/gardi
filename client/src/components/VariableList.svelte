@@ -2,8 +2,8 @@
   import type { Variable } from "../lib/types";
   import { VariableTypes } from "../lib/types";
   import VariableEditor from "./VariableEditor.svelte";
-  export let variables: { [key: string]: Variable } = {};
 
+  export let variables: { [key: string]: Variable } = {};
   let newVarName: string = "";
 
   function addVar() {
@@ -36,7 +36,10 @@
   {#each Object.entries(variables) as [key, _] (key)};
     <div class="variable-item">
       <h4>{key}</h4>
-      <VariableEditor bind:variable={variables[key]} />
+      <VariableEditor
+        bind:variable={variables[key]} 
+        remove={() => removeVar(key)}
+      />
       <button on:click={() => removeVar(key)}>Delete</button>
     </div>
   {/each}
