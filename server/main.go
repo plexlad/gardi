@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/plexlad/gardi/server/lib"
+	"github.com/plexlad/gardi/lib"
 )
 
 const (
