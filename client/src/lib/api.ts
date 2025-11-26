@@ -16,7 +16,6 @@ async function handleResponse<T>(response: Response): Promise<T> {
   return response.json();
 }
 
-// TODO: make the API work correctly
 export async function getSchemaIDs(user: string): Promise<string[]> {
   const response = await fetch(`${API_BASE}/${user}/schemas`);
   const data = await handleResponse<string[]>(response);
