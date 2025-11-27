@@ -4,13 +4,20 @@
   import { currentUser } from "../stores/userStore";
   import type { Schema } from "../lib/types";
   import VariableList from "../components/VariableList.svelte";
+  import VisualizationEditor from "../components/VisualizationEditor.svelte";
+  
   export let params;
+  
   let user = $currentUser;
   let loading = true;
+  let vizEditor: VisualizationEditor;
+  let showVisualizationEditor = false;
+  
   $: schema = $schemas.find((s) => s._id === params.id);
   $: if (schema && schema.variables === null) {
     schema.variables = schema.variables || {};
   }
+  
   onMount(async () => {
     if (!$currentUser) {
       console.error("No current user");
@@ -28,6 +35,12 @@
       loading = false;
     }
   });
+  
+  // Load visualizations when editor becomes available or schema changes
+  $: if (vizEditor && schema?.visualizations) {
+    vizEditor.loadVisualizationConfig(schema.visualizations);
+  }
+  
   async function saveSchema() {
     if (!schema) {
       console.error("No schema to save");
@@ -37,6 +50,14 @@
       console.error("No current user");
       return;
     }
+    
+    // Get visualization config from editor
+    if (vizEditor) {
+      const vizConfig = vizEditor.getVisualizationConfig();
+      console.log("Saving visualization config:", vizConfig);
+      schema.visualizations = vizConfig;
+    }
+    
     await schemas.save(user, schema);
   }
 </script>
@@ -49,21 +70,45 @@
   <div class="container">
     <header>
       <h2>Edit Schema: {schema.name}</h2>
+      <div class="tabs">
+        <button 
+          class="tab"
+          class:active={!showVisualizationEditor}
+          on:click={() => showVisualizationEditor = false}
+        >
+          Schema Details
+        </button>
+        <button 
+          class="tab"
+          class:active={showVisualizationEditor}
+          on:click={() => showVisualizationEditor = true}
+        >
+          Visualization Template
+        </button>
+      </div>
     </header>
-    <section class="schema-details">
-      <label>
-        <span class="label-text">Name:</span>
-        <input type="text" bind:value={schema.name} />
-      </label>
-      <label>
-        <span class="label-text">Description:</span>
-        <textarea bind:value={schema.description}></textarea>
-      </label>
-    </section>
-    <section class="variables-section">
-      <h3>Variables</h3>
-      <VariableList bind:variables={schema.variables} />
-    </section>
+    
+    {#if !showVisualizationEditor}
+      <section class="schema-details">
+        <label>
+          <span class="label-text">Name:</span>
+          <input type="text" bind:value={schema.name} />
+        </label>
+        <label>
+          <span class="label-text">Description:</span>
+          <textarea bind:value={schema.description}></textarea>
+        </label>
+      </section>
+      
+      <section class="variables-section">
+        <h3>Variables</h3>
+        <VariableList bind:variables={schema.variables} />
+      </section>
+    {:else}
+      <section class="visualization-section">
+        <VisualizationEditor bind:this={vizEditor} {schema} />
+      </section>
+    {/if}
   </div>
   
   <!-- Floating save button -->
@@ -82,54 +127,100 @@
 
 <style>
   .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 1rem;
-    padding-bottom: 5rem; /* Add space at bottom for floating button */
+    padding-bottom: 5rem;
   }
+  
   header {
     margin-bottom: 2rem;
   }
+  
   h2 {
     color: #333;
-    margin: 0;
+    margin: 0 0 1rem 0;
   }
+  
   h3 {
     color: #333;
     margin: 0 0 1rem 0;
   }
+  
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+  .tab {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+  }
+  
+  .tab:hover {
+    color: #333;
+    background: #f5f5f5;
+  }
+  
+  .tab.active {
+    color: #4a9eff;
+    border-bottom-color: #4a9eff;
+    font-weight: 600;
+  }
+  
   .schema-details {
     padding: 1.5rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-bottom: 2rem;
   }
+  
   .variables-section {
     padding: 1.5rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-bottom: 2rem;
   }
+  
+  .visualization-section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  
   label {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1rem;
   }
+  
   .label-text {
     font-weight: 500;
     color: #555;
   }
+  
   input[type="text"] {
     padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
   }
+  
   input[type="text"]:focus {
     outline: none;
     border-color: #4a9eff;
   }
+  
   textarea {
     padding: 0.5rem;
     border: 1px solid #ddd;
@@ -139,6 +230,7 @@
     resize: vertical;
     font-family: inherit;
   }
+  
   textarea:focus {
     outline: none;
     border-color: #4a9eff;

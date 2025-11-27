@@ -1,6 +1,7 @@
 <script lang="ts">
   import { VariableTypes } from "../lib/types";
   export let variable: any;
+  export const remove: () => void = () => {};
   
   $: optionsString = variable.options ? variable.options.join(", ") : "";
 </script>
