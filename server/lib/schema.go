@@ -69,9 +69,9 @@ type Schema struct {
 	//	Features       map[string]Feature  `json:"features"`
 	//	Modules        map[string]Module   `json:"modules"`
 	//	Initialization Initialization      `json:"initialization"`
-	//	Visualization  Visualization       `json:"visualization"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	Visualizations []Visualization `json:"visualizations"`
+	CreatedAt     time.Time     `json:"created_at"`
+	UpdatedAt     time.Time     `json:"updated_at"`
 }
 
 type Variable struct {
@@ -124,18 +124,14 @@ type Field struct {
 
 // Instance //
 
-// TODO: determine if the schema and visualization should be part of the instance
-
 // An instance of data based off a schema.
-// All values from the schema are processed at runtime.
 type Instance struct {
-	ID       string `json:"_id"`
-	SchemaID string `json:"schema_id"`
-	//	Visualization  Visualization  `json:"visualization"`
-	UserID      string `json:"user_id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	//	VariableValues map[string]any `json:"variable_values"`
+	ID             string         `json:"_id"`
+	SchemaID       string         `json:"schema_id"`
+	UserID         string         `json:"user_id"`
+	Name           string         `json:"name"`
+	Description    string         `json:"description"`
+	VariableValues map[string]any `json:"variable_values"`
 	//	ActiveFeatures []string       `json:"active_features"`
 	//	ActiveModules  []string       `json:"active_modules"`
 	CreatedAt time.Time `json:"created_at"`
@@ -149,60 +145,9 @@ type Instance struct {
 type Visualization struct {
 	Name                string            `json:"name"`
 	Type                VisualizationType `json:"type"`
-	ChildVisualizations []Visualization   `json:"child_visualizations"`
+	ChildVisualizations []Visualization   `json:"child_visualizations,omitempty"`
 	Config              json.RawMessage   `json:"config,omitempty"`
 }
-
-// Helper methods //
-
-//func (schema *Schema) GetAllVariables(activeModules []string) map[string]Variable {
-//	allVars := make(map[string]Variable)
-//
-//	// initial variables
-//	maps.Copy(allVars, schema.Variables)
-//
-//	// add variables from features
-//	for _, moduleName := range activeModules {
-//		if module, ok := schema.Modules[moduleName]; ok {
-//			maps.Copy(allVars, module.AddsVariables)
-//		}
-//	}
-//
-//	return allVars
-//}
-//
-//func (schema *Schema) GetAllProperties(activeModules []string) map[string]Property {
-//	allProperties := make(map[string]Property)
-//
-//	maps.Copy(allProperties, schema.Properties)
-//
-//	for _, moduleName := range activeModules {
-//		if module, ok := schema.Modules[moduleName]; ok {
-//			maps.Copy(allProperties, module.AddsProperties)
-//		}
-//	}
-//
-//	return allProperties
-//}
-//
-//func (schema *Schema) GetActiveModules(activeFeatures []string) []string {
-//	moduleSet := make(map[string]bool)
-//
-//	for _, featureName := range activeFeatures {
-//		if feature, ok := schema.Features[featureName]; ok {
-//			for _, moduleName := range feature.AddsModules {
-//				moduleSet[moduleName] = true
-//			}
-//		}
-//	}
-//
-//	modules := make([]string, 0, len(moduleSet))
-//	for moduleName := range moduleSet {
-//		modules = append(modules, moduleName)
-//	}
-//
-//	return modules
-//}
 
 // Basic schema validation
 func (s *Schema) Validate() error {
@@ -213,40 +158,3 @@ func (s *Schema) Validate() error {
 	// - Verify enum types
 	return nil
 }
-
-// Update active modules
-//func (i *Instance) UpdateActiveModules(schema *Schema) {
-//	i.ActiveModules = schema.GetActiveModules(i.ActiveFeatures)
-//}
-//
-//func (i *Instance) SetVariable(key string, value any) {
-//	i.VariableValues[key] = value
-//	i.UpdatedAt = time.Now()
-//}
-//
-//func (i *Instance) GetVariable(key string) (any, bool) {
-//	val, ok := i.VariableValues[key]
-//	return val, ok
-//}
-//
-//func (i *Instance) AddFeature(featureName string, schema *Schema) {
-//	if slices.Contains(i.ActiveFeatures, featureName) {
-//		return
-//	}
-//
-//	i.ActiveFeatures = append(i.ActiveFeatures, featureName)
-//	i.UpdateActiveModules(schema)
-//	i.UpdatedAt = time.Now()
-//}
-//
-//func (i *Instance) RemoveFeature(featureName string, schema *Schema) {
-//	for index, feature := range i.ActiveFeatures {
-//		if feature == featureName {
-//			i.ActiveFeatures = append(i.ActiveFeatures[:index], i.ActiveFeatures[index+1:]...)
-//			break
-//		}
-//	}
-//
-//	i.UpdateActiveModules(schema)
-//	i.UpdatedAt = time.Now()
-//}

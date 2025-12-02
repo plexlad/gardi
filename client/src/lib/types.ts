@@ -5,6 +5,7 @@ export interface Schema {
   name: string;
   description: string;
   variables: { [key: string]: Variable };
+  visualizations: Visualization[];
   created_at: string;
   updated_at: string;
 }
@@ -35,6 +36,19 @@ export interface Variable {
   max: number | null;
   options: string[] | null; // for enum
   items: Variable | null; // for array type
+}
+
+export enum VisualizationTypes {
+  Grid = "grid",
+  Empty = "empty",
+  Variable = "variable",
+}
+
+export interface Visualization {
+	name: string;
+	type: VisualizationTypes;
+	child_visualizations?: Visualization[];
+	config: any;
 }
 
 export interface NewSchemaRequest {
