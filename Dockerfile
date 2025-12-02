@@ -10,7 +10,7 @@ RUN go mod download
 # compile the binary
 RUN CGO_ENABLED=0 GOOS=linux go build -o /gardi
 
-EXPOSE 80
+EXPOSE 8080
 
 # run the binary
 CMD ["/gardi"]
