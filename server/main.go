@@ -247,7 +247,7 @@ func main() {
 	})
 
 	// run server with error checking
-	router.Logger.Fatal(router.Start(":5499"))
+	router.Logger.Fatal(router.Start(":8080"))
 }
 
 // TODO: Use this function to make code nice to look at

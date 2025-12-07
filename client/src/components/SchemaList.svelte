@@ -68,6 +68,7 @@
         placeholder="Description"
         rows="3"
       ></textarea>
+      <button type="reset">Reset</button>
       <button type="submit">Create</button>
     </form>
   {/if}

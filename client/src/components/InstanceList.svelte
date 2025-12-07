@@ -81,6 +81,7 @@
           <option value={schema._id}>{schema.name}</option>
         {/each}
       </select>
+      <button type="reset">Reset</button>
       <button type="submit">Create</button>
     </form>
   {/if}

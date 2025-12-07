@@ -26,9 +26,23 @@
     const { [key]: _, ...rest } = variables;
     variables = rest;
   }
+
+  let filterText: string = "";
+  $: filteredKeys = Object.keys(variables).filter(key =>
+    key.toLowerCase().includes(filterText.toLowerCase())
+  );
 </script>
 
 <div class="variables-list">
+  <div class="filter-bar">
+    <input 
+      type="text" 
+      placeholder="Filter variables..." 
+      bind:value={filterText} 
+      class="filter-input"
+    />
+  </div>
+
   <div class="add-variable">
     <input 
       type="text"
@@ -38,12 +52,16 @@
     />
     <button on:click={addVar}>Add Variable</button>
   </div>
+
+  {#if filteredKeys.length === 0}
+    <p class="empty-state">No variables found.</p>
+  {/if}
   
   {#if Object.keys(variables).length === 0}
     <p class="empty-state">No variables yet. Add one to get started!</p>
   {/if}
   
-  {#each Object.entries(variables) as [key, _] (key)}
+  {#each filteredKeys as key (key)}
     <div class="variable-item">
       <div class="variable-header">
         <h4>{key}</h4>
@@ -136,5 +154,21 @@
     color: #999;
     padding: 2rem;
     font-style: italic;
+  }
+
+  .filter-bar {
+    margin-bottom: 0.5rem;
+    display: flex;
+  }
+  .filter-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+  .filter-input:focus {
+    outline: none;
+    border-color: #4a9eff;
   }
 </style>
