@@ -6,7 +6,7 @@ import type {
   ApiError,
 } from "./types";
 
-const API_BASE = "http://localhost:5499";
+const API_BASE = "https://gardi-pnsa.onrender.com";
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {

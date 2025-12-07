@@ -24,10 +24,10 @@ type NewSchemaRequest struct {
 }
 
 type NewInstanceRequest struct {
-	Name        string                 `json:"name"`
-	Description string                 `json:"description"`
-	Variables   map[string]interface{} `json:"variables"`
-	SchemaID    string                 `json:"schema_id"`
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Variables   map[string]any `json:"variables"`
+	SchemaID    string         `json:"schema_id"`
 }
 
 func main() {
