@@ -366,7 +366,7 @@
   .grid-icon {
     width: 24px;
     height: 24px;
-    background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+    background: var(--button);
     border-radius: 4px;
     position: relative;
   }
@@ -486,7 +486,7 @@
   }
   
   .grid-container {
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 8px;
     padding: 1rem;
     background: #fafafa;
@@ -511,7 +511,7 @@
   
   .btn-edit, .btn-delete {
     background: white;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     font-size: 0.85rem;
     cursor: pointer;
     padding: 0.4rem 0.8rem;
@@ -566,7 +566,7 @@
   
   .grid-cell.variable {
     padding: 0.75rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--button);
     border: none;
   }
   
@@ -664,7 +664,7 @@
   
   .form-group input {
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 4px;
     font-size: 1rem;
   }

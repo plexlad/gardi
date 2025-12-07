@@ -73,7 +73,7 @@
   .add-variable input {
     flex: 1;
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 4px;
     font-size: 0.95rem;
   }
@@ -85,7 +85,6 @@
   
   .add-variable button {
     padding: 0.5rem 1.5rem;
-    background-color: #4a9eff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -93,13 +92,17 @@
     transition: background-color 0.2s;
     white-space: nowrap;
   }
+
+  button {
+    background-color: var(--button);
+  }
   
-  .add-variable button:hover {
-    background-color: #3a8eef;
+  button:hover {
+    background-color: var(--button-hover);
   }
   
   .variable-item {
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     padding: 1rem;
     border-radius: 8px;
     background-color: #fafafa;
@@ -120,17 +123,12 @@
   
   .delete-btn {
     padding: 0.4rem 1rem;
-    background-color: #dc3545;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9rem;
     transition: background-color 0.2s;
-  }
-  
-  .delete-btn:hover {
-    background-color: #c82333;
   }
   
   .empty-state {

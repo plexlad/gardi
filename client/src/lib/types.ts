@@ -11,10 +11,11 @@ export interface Schema {
 }
 
 export interface Instance {
-  _id: string,
+  _id: string;
   schema_id: string;
   name: string;
   description: string;
+  variables: { [key: string]: any };
   created_at: string;
   updated_at: string;
 }
@@ -45,10 +46,10 @@ export enum VisualizationTypes {
 }
 
 export interface Visualization {
-	name: string;
-	type: VisualizationTypes;
-	child_visualizations?: Visualization[];
-	config: any;
+  name: string;
+  type: VisualizationTypes;
+  child_visualizations?: Visualization[];
+  config: any;
 }
 
 export interface NewSchemaRequest {
@@ -60,6 +61,7 @@ export interface NewInstanceRequest {
   name: string;
   description: string;
   schema_id: string;
+  variables?: { [key: string]: any };
 }
 
 export interface ApiError {

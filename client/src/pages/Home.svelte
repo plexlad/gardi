@@ -8,7 +8,6 @@
 
 <main>
   <header>
-    <h1>gardi</h1>
     <UserLogin />
   </header>
 
@@ -22,27 +21,18 @@
         <InstanceList user={$currentUser} />
       </section>
     </div>
-  {:else}
-    <div class="welcome">
-      <p>Please enter your username to continue</p>
-    </div>
   {/if}
 </main>
 
 <style>
   main {
-    max-width: 1200px;
+    max-width: var(--site-width);
     margin: 0 auto;
     padding: 1rem;
   }
   
   header {
     margin-bottom: 2rem;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
   }
   
   .content {
@@ -53,13 +43,7 @@
   
   section {
     padding: 1rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 8px;
   }
-  
-  .welcome {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
-  }
-</style>
+ </style>

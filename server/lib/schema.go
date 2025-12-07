@@ -70,8 +70,8 @@ type Schema struct {
 	//	Modules        map[string]Module   `json:"modules"`
 	//	Initialization Initialization      `json:"initialization"`
 	Visualizations []Visualization `json:"visualizations"`
-	CreatedAt     time.Time     `json:"created_at"`
-	UpdatedAt     time.Time     `json:"updated_at"`
+	CreatedAt      time.Time       `json:"created_at"`
+	UpdatedAt      time.Time       `json:"updated_at"`
 }
 
 type Variable struct {
@@ -126,12 +126,12 @@ type Field struct {
 
 // An instance of data based off a schema.
 type Instance struct {
-	ID             string         `json:"_id"`
-	SchemaID       string         `json:"schema_id"`
-	UserID         string         `json:"user_id"`
-	Name           string         `json:"name"`
-	Description    string         `json:"description"`
-	VariableValues map[string]any `json:"variable_values"`
+	ID          string         `json:"_id"`
+	SchemaID    string         `json:"schema_id"`
+	UserID      string         `json:"user_id"`
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Variables   map[string]any `json:"variables"`
 	//	ActiveFeatures []string       `json:"active_features"`
 	//	ActiveModules  []string       `json:"active_modules"`
 	CreatedAt time.Time `json:"created_at"`

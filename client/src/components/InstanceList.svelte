@@ -93,13 +93,13 @@
     <div class="grid">
       {#each $instances as instance}
         <div class="card">
-          <h4>{instance.name}</h4>
+          <a href={import.meta.env.BASE_URL + "#/instances/" + instance._id}><h4>{instance.name}</h4></a>
           <p>{instance.description}</p>
+          <button on:click={() => handleDelete(instance)}>Delete</button>
           <div class="meta">
             <small>Schema: {getSchemaName(instance.schema_id)}</small>
             <small>Created: {new Date(instance.created_at).toLocaleDateString()}</small>
           </div>
-          <button on:click={() => handleDelete(instance)}>Delete</button>
         </div>
       {/each}
     </div>
@@ -124,7 +124,7 @@
   
   button {
     padding: 0.5rem 1rem;
-    background: #2196F3;
+    background-color: var(--button);
     color: white;
     border: none;
     border-radius: 4px;
@@ -133,7 +133,7 @@
   }
   
   button:hover {
-    background: #1976D2;
+    background-color: var(--button-hover);
   }
   
   .create-form {
@@ -148,7 +148,7 @@
   
   input, textarea, select {
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 4px;
     font-size: 0.9rem;
     font-family: inherit;
@@ -176,7 +176,7 @@
   
   .card {
     padding: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     background: white;
     transition: box-shadow 0.2s;
@@ -195,6 +195,10 @@
     margin: 0 0 1rem 0;
     color: #666;
     font-size: 0.9rem;
+  }
+
+  .card button {
+    margin-bottom: 1em;
   }
   
   .meta {

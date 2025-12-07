@@ -88,7 +88,7 @@
   .form-input,
   .form-select {
     padding: 0.6rem;
-    border: 1px solid #ddd;
+    border: var(--button-color) solid var(--button-width);
     border-radius: 4px;
     font-size: 0.95rem;
     background-color: white;

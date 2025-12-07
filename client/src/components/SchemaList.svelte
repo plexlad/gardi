@@ -82,6 +82,7 @@
         <div class="card">
           <a href={import.meta.env.BASE_URL + "#/schemas/" + schema._id}><h4>{schema.name}</h4></a>
           <p>{schema.description}</p>
+          <button on:click={() => handleDelete(schema)}>Delete</button>
           <div class="meta">
             <small>Version: {schema.version}</small>
             <small
@@ -90,7 +91,6 @@
               ).toLocaleDateString()}</small
             >
           </div>
-          <button on:click={() => handleDelete(schema)}>Delete</button>
         </div>
       {/each}
     </div>
@@ -115,7 +115,7 @@
 
   button {
     padding: 0.5rem 1rem;
-    background: #4caf50;
+    background-color: var(--button);
     color: white;
     border: none;
     border-radius: 4px;
@@ -124,7 +124,7 @@
   }
 
   button:hover {
-    background: #45a049;
+    background-color: var(--button-hover);
   }
 
   .create-form {
@@ -133,14 +133,14 @@
     gap: 0.75rem;
     padding: 1rem;
     background: #f9f9f9;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     margin-bottom: 1rem;
   }
 
   input,
   textarea {
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 4px;
     font-size: 0.9rem;
     font-family: inherit;
@@ -150,7 +150,7 @@
     padding: 0.75rem;
     background: #ffebee;
     color: #c62828;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     margin-bottom: 1rem;
   }
 
@@ -169,7 +169,7 @@
 
   .card {
     padding: 1rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 4px;
     background: white;
     transition: box-shadow 0.2s;
@@ -188,6 +188,10 @@
     margin: 0 0 1rem 0;
     color: #666;
     font-size: 0.9rem;
+  }
+
+  .card button {
+    margin-bottom: 1em;
   }
 
   .meta {

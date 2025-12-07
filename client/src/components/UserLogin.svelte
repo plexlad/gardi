@@ -40,14 +40,14 @@
     max-width: 400px;
     margin: 2rem auto;
     padding: 2rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
     background: white;
   }
   
   h2 {
     margin-top: 0;
-    color: #333;
+    color: var(--border-color);
   }
   
   form {
@@ -58,14 +58,14 @@
   
   input {
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 4px;
     font-size: 1rem;
   }
   
   button {
     padding: 0.75rem;
-    background: #4CAF50;
+    background: var(--button);
     color: white;
     border: none;
     border-radius: 4px;
@@ -74,24 +74,19 @@
   }
   
   button:hover {
-    background: #45a049;
+    background: var(--button-hover);
   }
   
   .user-info {
     padding: 1rem;
     background: #f0f0f0;
-    border-radius: 4px;
+    border-radius: var(--border-radius);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   
   .user-info button {
-    background: #f44336;
     padding: 0.5rem 1rem;
-  }
-  
-  .user-info button:hover {
-    background: #da190b;
   }
 </style>

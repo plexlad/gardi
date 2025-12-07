@@ -1,6 +1,51 @@
 :root {
   --urgent: #F44336;
-  --button: #2196F3;
-  --background: #F5F5F5;
-  --foreground: #F0F0F0;
+  --button: #C75B5B;
+  --button-hover: #A52A2A;
+
+  --border-radius: 1em;
+  --border-width: 0.1em;
+  --border-color: #bbbbbb;
+
+  --title-font: 'Jacquard12';
+  --default-font: 'Zalando Sans';
+
+  --site-width: 60em;
+}
+
+body {
+  background-color: #fdfdfd;
+  font-family: var(--default-font)
+}
+
+button, .button {
+  background: var(--button);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em 1.5em;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+@font-face {
+  font-family: 'Jacquard12';
+  src: url('/fonts/Jacquard12-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Zalando Sans';
+  src: url('/fonts/ZalandoSans-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Zalando Sans';
+  src: url('/fonts/ZalandoSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
 }

@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import { schemas } from "../stores/schemaStore";
   import { currentUser } from "../stores/userStore";
-  import type { Schema } from "../lib/types";
   import VariableList from "../components/VariableList.svelte";
   import VisualizationEditor from "../components/VisualizationEditor.svelte";
   
@@ -127,7 +126,7 @@
 
 <style>
   .container {
-    max-width: 1400px;
+    max-width: var(--site-width);
     margin: 0 auto;
     padding: 1rem;
     padding-bottom: 5rem;
@@ -150,7 +149,7 @@
   .tabs {
     display: flex;
     gap: 0.5rem;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: var(--border-width) solid var(--border-color);
   }
   
   .tab {
@@ -178,20 +177,20 @@
   
   .schema-details {
     padding: 1.5rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 8px;
     margin-bottom: 2rem;
   }
   
   .variables-section {
     padding: 1.5rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 8px;
     margin-bottom: 2rem;
   }
   
   .visualization-section {
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 2rem;
@@ -211,7 +210,7 @@
   
   input[type="text"] {
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: var(--border-width) solid var(--border-color);
     border-radius: 4px;
     font-size: 1rem;
   }
@@ -223,8 +222,8 @@
   
   textarea {
     padding: 0.5rem;
-    border: 1px solid #ddd;
     border-radius: 4px;
+    border: var(--border-width) solid var(--border-color);
     font-size: 1rem;
     min-height: 100px;
     resize: vertical;

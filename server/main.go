@@ -24,9 +24,10 @@ type NewSchemaRequest struct {
 }
 
 type NewInstanceRequest struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	SchemaID    string `json:"schema_id"`
+	Name        string                 `json:"name"`
+	Description string                 `json:"description"`
+	Variables   map[string]interface{} `json:"variables"`
+	SchemaID    string                 `json:"schema_id"`
 }
 
 func main() {
@@ -193,8 +194,12 @@ func main() {
 			SchemaID:    req.SchemaID,
 			Name:        req.Name,
 			Description: req.Description,
+			Variables:   req.Variables,
 			CreatedAt:   time.Now(),
 			UpdatedAt:   time.Now(),
+		}
+		if instance.Variables == nil {
+			instance.Variables = make(map[string]any)
 		}
 
 		err = db.Set(CollectionInstances, user, instanceID, instance)
