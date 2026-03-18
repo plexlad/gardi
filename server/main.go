@@ -34,16 +34,25 @@ func main() {
 	db := NewJsonDB("./data")
 
 	router := echo.New()
+
+	// Custom middleware to log request path
+	router.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			println("Request Path:", c.Request().URL.Path)
+			return next(c)
+		}
+	})
+
+	// Serve static files from the Svelte build output
+	router.Static("/", "../client/dist")
+	router.File("/", "../client/dist/index.html")
+
 	router.Use(middleware.Logger())
 	router.Use(middleware.Recover())
 	router.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodDelete},
 	}))
-
-	// Serve static files from the Svelte build output
-	router.Static("/", "/app/client/dist")
-	router.File("/", "/app/client/dist/index.html")
 
 	router.GET("/healthz", func(c echo.Context) error {
 		return c.String(http.StatusOK, "ok")

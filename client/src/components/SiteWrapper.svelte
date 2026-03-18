@@ -12,7 +12,7 @@
   </a>
   <ul class="links">
     <li><a href={import.meta.env.BASE_URL}>home</a></li>
-    <li><a href={import.meta.env.BASE_URL + "/#/stuff"}>your stuff</a></li>
+    <li><a href={import.meta.env.BASE_URL + "#/stuff"}>your stuff</a></li>
   </ul>
 </nav>
 <slot />

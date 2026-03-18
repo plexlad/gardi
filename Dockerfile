@@ -26,7 +26,7 @@ RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o /gardi .
 
 # Copy frontend build output from the first stage
-COPY --from=frontend-builder /app/client/dist /app/client/dist
+COPY --from=frontend-builder /app/client/dist /app/client/public
 
 EXPOSE 8080
 
