@@ -41,6 +41,14 @@ func main() {
 		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodDelete},
 	}))
 
+	// Serve static files from the Svelte build output
+	router.Static("/", "/app/client/dist")
+	router.File("/", "/app/client/dist/index.html")
+
+	router.GET("/healthz", func(c echo.Context) error {
+		return c.String(http.StatusOK, "ok")
+	})
+
 	u := router.Group("/:user")
 	schemas := u.Group("/schemas")
 	instances := u.Group("/instances")
