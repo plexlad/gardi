@@ -44,8 +44,8 @@ func main() {
 	})
 
 	// Serve static files from the Svelte build output
-	router.Static("/", "../client/dist")
-	router.File("/", "../client/dist/index.html")
+	router.Static("/", "/app/client/dist")
+	router.File("/", "/app/client/dist/index.html")
 
 	router.Use(middleware.Logger())
 	router.Use(middleware.Recover())
