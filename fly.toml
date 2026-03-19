@@ -4,7 +4,7 @@
 #
 
 app = 'gardi'
-primary_region = 'ams'
+primary_region = 'yyz'
 
 [build]
 
